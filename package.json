@@ -1,0 +1,31 @@
+{
+  "name": "edn",
+  "version": "0.0.0",
+  "description": "Fast and simple EDN parser and serializer",
+  "main": "index.js",
+  "scripts": {
+    "build": "jison parser.jison -m commonjs",
+    "pretest": "npm run build",
+    "test": "tape test",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:L8D/node-edn.git"
+  },
+  "keywords": [
+    "edn",
+    "lisp",
+    "clojure"
+  ],
+  "author": "Tenor Biel <tenorbiel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/L8D/node-edn/issues"
+  },
+  "homepage": "https://github.com/L8D/node-edn",
+  "devDependencies": {
+    "tape": "^3.0.1",
+    "jison": "^0.4.15"
+  }
+}
