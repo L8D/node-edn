@@ -2,4 +2,6 @@ node-edn [![Build Status](http://img.shields.io/travis/roughculture/node-edn.svg
 ==
 ========
 
-Fast and simple EDN parser and serializer for node
+Fast and simple EDN parser and serializer for node.
+
+**DO NOT USE THIS MODULE YET IT COULD BE SERIOUSLY UNSTABLE**
