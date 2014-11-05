@@ -25,8 +25,8 @@
   },
   "homepage": "https://github.com/roughculture/node-edn",
   "devDependencies": {
-    "jison": "~0.4.15",
-    "tap-dot": "~0.2.3",
-    "tape": "~3.0.1"
+    "jison": "^0.4.15",
+    "tap-dot": "^0.2.3",
+    "tape": "^3.0.1"
   }
 }
