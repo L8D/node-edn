@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:L8D/node-edn.git"
+    "url": "git@github.com:roughculture/node-edn.git"
   },
   "keywords": [
     "edn",
@@ -21,9 +21,9 @@
   "author": "Tenor Biel <tenorbiel@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/L8D/node-edn/issues"
+    "url": "https://github.com/roughculture/node-edn/issues"
   },
-  "homepage": "https://github.com/L8D/node-edn",
+  "homepage": "https://github.com/roughculture/node-edn",
   "devDependencies": {
     "tape": "^3.0.1",
     "jison": "^0.4.15"
