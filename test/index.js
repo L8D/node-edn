@@ -1,79 +1,99 @@
-var test = require('tape');
+var assert = require('assert');
 var edn = require('../');
 
-test('lexer', function(assert) {
-  assert.plan(11);
+describe('should lexer', function() {
+  it('should lex whitespace', function() {
+    assert.deepEqual(edn.lex('\n, \t'), []);
+  });
 
-  assert.same(edn.lex('\n, \t'), [], 'lex whitespace');
+  it('should lex basic literals', function() {
+    assert.deepEqual(edn.lex('nil true false'), [
+      {type: 'nil'},
+      {type: 'boolean', value: true},
+      {type: 'boolean', value: false},
+    ]);
+  });
 
-  assert.same(edn.lex('nil true false'), [
-    {type: 'nil'},
-    {type: 'boolean', value: true},
-    {type: 'boolean', value: false},
-  ], 'lex basic literals');
+  it('should lex strings', function() {
+    assert.deepEqual(edn.lex('"foo \\"bar\\" baz"'), [
+      {type: 'string', value: 'foo "bar" baz'}
+    ]);
+  });
 
-  assert.same(edn.lex('"foo \\"bar\\" baz"'), [
-    {type: 'string', value: 'foo "bar" baz'}
-  ], 'lex strings');
+  it('should lex characters', function() {
+    assert.deepEqual(edn.lex('\\c \\space'), [
+      {type: 'character', value: 'c'},
+      {type: 'character', value: 'space'}
+    ]);
+  });
 
-  assert.same(edn.lex('\\c \\space'), [
-    {type: 'character', value: 'c'},
-    {type: 'character', value: 'space'}
-  ], 'lex characters');
+  it('should lex symbols', function() {
+    assert.deepEqual(edn.lex('foo'), [
+      {type: 'symbol', value: 'foo'}
+    ]);
+  });
 
-  assert.same(edn.lex('foo'), [
-    {type: 'symbol', value: 'foo'}
-  ], 'lex symbol');
+  it('should lex keywords', function() {
+    assert.deepEqual(edn.lex(':foo'), [
+      {type: 'keyword', value: 'foo'}
+    ]);
+  });
 
-  assert.same(edn.lex(':foo'), [
-    {type: 'keyword', value: 'foo'}
-  ], 'lex keywords');
+  it('should lex numbers', function() {
+    assert.deepEqual(edn.lex('123'), [
+      {type: 'number', value: 123}
+    ]);
+  });
 
-  assert.same(edn.lex('123'), [
-    {type: 'number', value: 123}
-  ], 'lex numbers');
+  it('should lex lists', function() {
+    assert.deepEqual(edn.lex('(a b 42)'), [{
+      type: 'list',
+      value: [
+        {type: 'symbol', value: 'a'},
+        {type: 'symbol', value: 'b'},
+        {type: 'number', value: 42}
+      ]
+    }]);
+  });
 
-  assert.same(edn.lex('(a b 42)'), [{
-    type: 'list',
-    value: [
-      {type: 'symbol', value: 'a'},
-      {type: 'symbol', value: 'b'},
-      {type: 'number', value: 42}
-    ]
-  }], 'lex lists');
+  it('should lex vectors', function() {
+    assert.deepEqual(edn.lex('[a b 42]'), [{
+      type: 'vector',
+      value: [
+        {type: 'symbol', value: 'a'},
+        {type: 'symbol', value: 'b'},
+        {type: 'number', value: 42}
+      ]
+    }]);
+  });
 
-  assert.same(edn.lex('[a b 42]'), [{
-    type: 'vector',
-    value: [
-      {type: 'symbol', value: 'a'},
-      {type: 'symbol', value: 'b'},
-      {type: 'number', value: 42}
-    ]
-  }], 'lex vectors');
+  it('should lex maps', function() {
+    assert.deepEqual(edn.lex('{:a 1, "foo" :bar, [3] four}'), [{
+      type: 'map',
+      value: [{
+        key: {type: 'keyword', value: 'a'},
+        value: {type: 'number', value: 1}
+      }, {
+        key: {type: 'string', value: 'foo'},
+        value: {type: 'keyword', value: 'bar'}
+      }, {
+        key: {
+          type: 'vector',
+          value: [{type: 'number', value: 3}]
+        },
+        value: {type: 'symbol', value: 'four'}
+      }]
+    }]);
+  });
 
-  assert.same(edn.lex('{:a 1, "foo" :bar, [3] four}'), [{
-    type: 'map',
-    value: [{
-      key: {type: 'keyword', value: 'a'},
-      value: {type: 'number', value: 1}
-    }, {
-      key: {type: 'string', value: 'foo'},
-      value: {type: 'keyword', value: 'bar'}
-    }, {
-      key: {
-        type: 'vector',
-        value: [{type: 'number', value: 3}]
-      },
-      value: {type: 'symbol', value: 'four'}
-    }]
-  }], 'lex maps');
-
-  assert.same(edn.lex('#{a b 42}'), [{
-    type: 'set',
-    value: [
-      {type: 'symbol', value: 'a'},
-      {type: 'symbol', value: 'b'},
-      {type: 'number', value: 42}
-    ]
-  }], 'lex sets');
+  it('should lex sets', function() {
+    assert.deepEqual(edn.lex('#{a b 42}'), [{
+      type: 'set',
+      value: [
+        {type: 'symbol', value: 'a'},
+        {type: 'symbol', value: 'b'},
+        {type: 'number', value: 42}
+      ]
+    }]);
+  });
 });

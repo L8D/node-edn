@@ -6,7 +6,7 @@
   "scripts": {
     "build": "jison parser.jison -m commonjs",
     "pretest": "npm run build",
-    "test": "tape test | tap-dot",
+    "test": "mocha",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -26,10 +26,10 @@
   "homepage": "https://github.com/roughculture/node-edn",
   "devDependencies": {
     "jison": "^0.4.15",
-    "tap-dot": "^0.2.3",
-    "tape": "^3.0.1"
+    "mocha": "^2.0.1"
   },
   "testling": {
+    "harness": "mocha-bdd",
     "files": "test/*.js",
     "browsers": [
       "ie/6..latest",
