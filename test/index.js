@@ -2,6 +2,8 @@ var test = require('tape');
 var edn = require('../');
 
 test('lexer', function(assert) {
+  assert.plan(11);
+
   assert.same(edn.lex('\n, \t'), [], 'lex whitespace');
 
   assert.same(edn.lex('nil true false'), [
@@ -74,6 +76,4 @@ test('lexer', function(assert) {
       {type: 'number', value: 42}
     ]
   }], 'lex sets');
-
-  assert.end();
 });
