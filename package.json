@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "jison parser.jison -m commonjs",
-    "pretest": "npm run build",
+    "pretest": "npm run lint && npm run build",
     "test": "mocha",
-    "prepublish": "npm run build"
+    "lint": "jshint .",
+    "prepublish": "npm test"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "homepage": "https://github.com/roughculture/node-edn",
   "devDependencies": {
     "jison": "^0.4.15",
+    "jshint": "^2.5.10",
     "mocha": "^2.0.1"
   },
   "testling": {
