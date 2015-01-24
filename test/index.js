@@ -4,7 +4,7 @@
 var assert = require('assert');
 var edn = require('../');
 
-describe('should lexer', function() {
+describe('lexer', function() {
   it('should lex whitespace', function() {
     assert.deepEqual(edn.lex('\n, \t'), []);
   });
